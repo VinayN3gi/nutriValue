@@ -4,8 +4,19 @@ import ScreenWrapper from '@/components/ScreenWrapper'
 import { theme } from '@/constants/theme'
 import Button from '@/components/Button'
 import { hp, wp } from '@/helpers/common'
+import { useRouter } from 'expo-router'
+import Index from '@/assets/icons/Index'
+import Graph from '@/assets/icons/Graph'
+
+
 
 const index = () => {
+  const router = useRouter();
+
+
+  const moveToSignUp = () => {
+    router.push('/signScreen')
+  }
   return (
     <ScreenWrapper bg="white">
       <StatusBar barStyle="dark-content" />
@@ -13,11 +24,16 @@ const index = () => {
 
           {/* Logo and Text */}
           <View style={styles.logoContainer}>
-            <Image
+            {/*<Image
               source={require('@/assets/images/logo.png')}
               style={styles.logoStyle}
               resizeMode='contain'
-            />
+            />*/}
+            <Graph 
+            width={wp(100)}
+            height={hp(25)}
+            
+            color={theme.colors.primary}/>
             <Text style={styles.headerTextStyle}>
               Welcome
             </Text>
@@ -28,18 +44,19 @@ const index = () => {
 
           {/* Sign In Button */}
           <Button
-            title="Sign In"
-            onPress={() => {}}
-            buttonStyle={styles.signInButton}
+            title="Sign Up"
+            buttonStyle={{marginTop: hp(12)}}
+            onPress={moveToSignUp}
           />
+
 
           {/* "Don't have an account?" */}
           <View style={styles.signUpContainer}>
             <Text style={styles.bottomTextStyle}>
-              Don't have an account?{' '}
+              Already have an account ?{' '}
             </Text>
-              <Pressable onPress={() => {}} style={styles.pressableStyle}>
-                <Text style={styles.signUpTextStyle}>Sign Up</Text>
+              <Pressable onPress={() => {router.push('/loginScreen')}} style={styles.pressableStyle}>
+                <Text style={styles.signUpTextStyle}>Sign In</Text>
               </Pressable>
           </View>
 
@@ -55,6 +72,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: wp(6),
     textAlign: 'center',
+
   },
   logoContainer: {
     alignItems: 'center',
@@ -62,8 +80,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logoStyle: {
-    width: wp(50),
-    height: hp(20),
+    width: wp(100),
+    height: hp(25),
   },
   headerTextStyle: {
     fontSize: wp(6.5),
@@ -74,10 +92,6 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: wp(5),
     color: theme.colors.textLight,
-  },
-  signInButton: {
-    marginTop: hp(10), 
-    width: wp(60),      
   },
   signUpContainer: {
     justifyContent: 'center',
