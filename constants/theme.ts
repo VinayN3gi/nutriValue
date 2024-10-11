@@ -5,6 +5,7 @@ export const theme={
         secondary:"#DBFBED",
         white:"#FFFFFF",
         dark:"#000000",
+        tabIconColor:"#04AF70",
 
         text:"#494949",
         textLight:"#7C7C7C",
