@@ -8,8 +8,10 @@ import InputComponent from '@/components/InputComponent'
 import { theme } from '@/constants/theme'
 import Index from '@/assets/icons/Index'
 import Button from '@/components/Button'
-import { auth } from '@/firebaseConfig'
+import { auth, db } from '@/firebaseConfig'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { collection, addDoc } from "firebase/firestore";
+
 
 const signScreen = () => {
   const authInstance=auth;
@@ -24,15 +26,30 @@ const signScreen = () => {
   LogBox.ignoreAllLogs();//Ignore all log notifications
   //console.disableYellowBox=true;//Disable all yellow warnings
 
-  const firebaseSignup=async(email:string,password:string)=>{
+  const createUser=async(email:string,password:string,uid:string)=>{
     try {
-      const user=await createUserWithEmailAndPassword(authInstance,email,password);
-      console.log(`User created successfully ${user.user.email}`);
-    } catch (error) {
-      console.log(`Error occured while creating user ${error}`);
+      const docRef=await addDoc(collection(db, "users"), {
+        email: email,
+        password: password,
+        uid:uid,
+      })
+      console.log(`Document written with ID: ${docRef.id}`);
+    }catch (error) {
+      console.error("Error adding document: ", error);
     }
 
   }
+
+  const firebaseSignup=async(email:string,password:string)=>{
+    try {
+      const user=await createUserWithEmailAndPassword(authInstance,email,password);
+      console.log(`User created successfully ${user.user.uid}`);
+      createUser(email,password,user.user.uid);
+    } catch (error) {
+      console.log(`Error occured while creating user ${error}`);
+    }
+  }
+  
   const signInButtonHandler=()=>{
     const email=emailRef.current;
     const password=passwordRef.current;
