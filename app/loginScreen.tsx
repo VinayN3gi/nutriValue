@@ -56,6 +56,7 @@ const loginScreen = () => {
       console.log(email,password);
       firebaseLogin(email,password);
       setLoading(true);
+      router.replace("../(tabs)/scan");
     }
   }
   
