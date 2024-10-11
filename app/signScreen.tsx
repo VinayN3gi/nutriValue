@@ -8,9 +8,11 @@ import InputComponent from '@/components/InputComponent'
 import { theme } from '@/constants/theme'
 import Index from '@/assets/icons/Index'
 import Button from '@/components/Button'
-
+import { auth } from '@/firebaseConfig'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 
 const signScreen = () => {
+  const authInstance=auth;
   const router = useRouter();
   const emailRef=useRef<string>('');
   const passwordRef=useRef<string>('');
@@ -22,7 +24,15 @@ const signScreen = () => {
   LogBox.ignoreAllLogs();//Ignore all log notifications
   //console.disableYellowBox=true;//Disable all yellow warnings
 
+  const firebaseSignup=async(email:string,password:string)=>{
+    try {
+      const user=await createUserWithEmailAndPassword(authInstance,email,password);
+      console.log(`User created successfully ${user.user.email}`);
+    } catch (error) {
+      console.log(`Error occured while creating user ${error}`);
+    }
 
+  }
   const signInButtonHandler=()=>{
     const email=emailRef.current;
     const password=passwordRef.current;
@@ -43,6 +53,8 @@ const signScreen = () => {
       setEmptyEmail(false);
       setEmptyPassword(false);
       console.log(email,password);
+      firebaseSignup(email,password);
+      setLoading(true);
     }
   }
   
@@ -83,7 +95,7 @@ const signScreen = () => {
           </View>
 
 
-          <Button title='Sign In' buttonStyle={{marginTop:hp(2)}} onPress={signInButtonHandler}/>
+          <Button title='Sign In' buttonStyle={{marginTop:hp(2)}} onPress={signInButtonHandler} isLoading={loading}/>
             <View style={{justifyContent:'center',alignItems:'center'}}>
                 
                 <Text style={{color:theme.colors.text}}>Already have an account?</Text>

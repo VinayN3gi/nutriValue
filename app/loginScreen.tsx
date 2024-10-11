@@ -8,9 +8,12 @@ import InputComponent from '@/components/InputComponent'
 import { theme } from '@/constants/theme'
 import Index from '@/assets/icons/Index'
 import Button from '@/components/Button'
+import { auth } from '@/firebaseConfig'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
 
 const loginScreen = () => {
+  const authInstance=auth;
   const router = useRouter();
   const emailRef=useRef<string>('');
   const passwordRef=useRef<string>('');
@@ -19,9 +22,17 @@ const loginScreen = () => {
   const [emptyPassword,setEmptyPassword]=useState(false);
 
   LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-  LogBox.ignoreAllLogs();//Ignore all log notifications
-  //console.disableYellowBox=true;//Disable all yellow warnings
+  LogBox.ignoreAllLogs();
 
+  const firebaseLogin=async(email:string,password:string)=>{
+    try {
+      const user=await signInWithEmailAndPassword(authInstance,email,password);
+      console.log(`Login in was successful ${user.user.email}`);
+    } catch (error) {
+      console.log(`Error occured while logging in ${error}`);
+    }
+  }
+  
 
   const signInButtonHandler=()=>{
     const email=emailRef.current;
@@ -43,6 +54,8 @@ const loginScreen = () => {
       setEmptyEmail(false);
       setEmptyPassword(false);
       console.log(email,password);
+      firebaseLogin(email,password);
+      setLoading(true);
     }
   }
   
@@ -84,7 +97,8 @@ const loginScreen = () => {
           </View>
 
 
-          <Button title='Sign In' buttonStyle={{marginTop:hp(2)}} onPress={signInButtonHandler}/>
+          <Button title='Sign In' buttonStyle={{marginTop:hp(2)}} onPress={signInButtonHandler}
+          isLoading={loading}/>
             <View style={{justifyContent:'center',alignItems:'center'}}>
                 
                 <Text style={{color:theme.colors.text}}>Don't have an account?</Text>

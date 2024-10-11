@@ -5,7 +5,6 @@ import { theme } from '@/constants/theme'
 import Button from '@/components/Button'
 import { hp, wp } from '@/helpers/common'
 import { useRouter } from 'expo-router'
-import Index from '@/assets/icons/Index'
 import Graph from '@/assets/icons/Graph'
 
 
