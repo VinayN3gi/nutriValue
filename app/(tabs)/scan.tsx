@@ -2,12 +2,13 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import ScreenWrapper from '@/components/ScreenWrapper'
 import Display from '@/components/Display'
+import NutrientComponent from '@/components/NutrientComponent'
 
 const scan = () => {
   return (
-    <ScreenWrapper bg="white">
+    <ScreenWrapper bg="CCCCCC">
         <View style={styles.container}>
-            <Display/>
+            <NutrientComponent/>
         </View>
     </ScreenWrapper>
   )

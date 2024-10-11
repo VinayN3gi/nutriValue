@@ -17,7 +17,7 @@ const index = () => {
     router.push('/signScreen')
   }
   return (
-    <ScreenWrapper bg="white">
+    <ScreenWrapper bg="CCCCCC">
       <StatusBar barStyle="dark-content" />
         <View style={styles.container}>
 

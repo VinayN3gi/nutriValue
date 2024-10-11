@@ -76,7 +76,7 @@ const signScreen = () => {
   }
   
   return (
-    <ScreenWrapper bg="white">
+    <ScreenWrapper bg="CCCCCC">
       <View style={styles.container}>
        <BackButton onPress={()=>router.back()}/>
         <View>

@@ -6,10 +6,10 @@ const _layout = () => {
   return (
    <Stack screenOptions={{
     headerShown:false
-   }}>
-    <Stack.Screen name="(tabs)" options={{headerShown:false}}/>
-    <Stack.Screen name="loginScreen"/>
+  }}>
     <Stack.Screen name="index"/>
+    <Stack.Screen name="(tabs)" options={{headerShown:false}}/>
+     <Stack.Screen name="loginScreen"/>
     <Stack.Screen name="signScreen"/>
    </Stack>
   )
